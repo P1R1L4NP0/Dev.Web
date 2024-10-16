@@ -16,7 +16,7 @@ let items = [
 /**
  * 
  * Endpoint para buscar os dados da lista
- * 
+ *  
  */
 app.get('/item', (req, res) => {
     res.status(200).json(items);
@@ -39,10 +39,15 @@ app.get('/item/:id', (req, res) => {
  * Endpoint para criar um novo item
  */
 app.post('/item', (req, res) => {
+    const novo = {id:items.length+1, ...req.body};
     const { name } = req.body;
     if (!name || typeof name !== 'string' || name.length < 3) {
         return res.status(400).json({ message: "Erro, número de caracteres insuficiente" });
-    }})
+    }else{
+        items.push(novo);
+        return res.status(201).json(novo);
+    }
+})
 
 //vamos passar como parametro na chamada o id do objeto que irá ser excluido
 app.delete('/item/:id', (req, res) => {
